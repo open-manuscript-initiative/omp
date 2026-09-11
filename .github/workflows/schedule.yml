@@ -1,6 +1,6 @@
+# The upstream daily matrix is intentionally manual-only in this integration fork.
+# Open Manuscript Studio exercises pinned PKP builds in its own integration workflow.
 on:
-  schedule:
-    - cron: '5 5 * * *'
   workflow_dispatch:
 
 name: schedule
