@@ -109,14 +109,14 @@ class Dc11SchemaPublicationFormatAdapter extends MetadataDataObjectAdapter
         $this->addLocalizedElements($dc11Description, 'dc:subject', $subjects);
 
         // Description
-        $this->addLocalizedElements($dc11Description, 'dc:description', $publication->getData('abstract'));
+        $this->addLocalizedElements($dc11Description, 'dc:description', (array) $publication->getData('abstract'));
 
         // Publisher
-        $publisher = $press->getData('publisher');
+        $publisher = $publication->getPublisher($press);
         if (!empty($publisher)) {
             $publishers = [$press->getPrimaryLocale() => $publisher];
         } else {
-            $publishers = $press->getName(null); // Default
+            $publishers = $publication->getData('contextName', null) ?: $press->getName(null); // Default
         }
         $this->addLocalizedElements($dc11Description, 'dc:publisher', $publishers);
 
@@ -229,7 +229,7 @@ class Dc11SchemaPublicationFormatAdapter extends MetadataDataObjectAdapter
         }
 
         // Source (press title and pages)
-        $sources = $press->getName(null);
+        $sources = $publication->getData('contextName') ?: $press->getName(null);
         $pages = $publication->getData('pages');
         if (!empty($pages)) {
             $pages = '; ' . $pages;
@@ -307,7 +307,7 @@ class Dc11SchemaPublicationFormatAdapter extends MetadataDataObjectAdapter
     private function addLocalizedElements(
         MetadataDescription &$description,
         string $propertyName,
-        array $localizedValues
+        ?array $localizedValues
     ): void {
         foreach (stripAssocArray((array) $localizedValues) as $locale => $values) {
             if (is_scalar($values)) {

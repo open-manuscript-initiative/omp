@@ -17,7 +17,7 @@
 namespace APP\components\listPanels;
 
 use PKP\components\listPanels\PKPDoiListPanel;
-use PKP\submission\PKPSubmission;
+use PKP\publication\PKPPublication;
 
 class DoiListPanel extends PKPDoiListPanel
 {
@@ -42,16 +42,25 @@ class DoiListPanel extends PKPDoiListPanel
             'filters' => [
                 [
                     'title' => __('publication.status.published'),
-                    'param' => 'status',
-                    'value' => (string) PKPSubmission::STATUS_PUBLISHED
+                    'param' => 'currentPublicationStatus',
+                    'value' => (string) PKPPublication::STATUS_PUBLISHED
                 ],
                 [
                     'title' => __('publication.status.unpublished'),
-                    'param' => 'status',
-                    'value' => PKPSubmission::STATUS_QUEUED . ', ' . PKPSubmission::STATUS_SCHEDULED
+                    'param' => 'currentPublicationStatus',
+                    'value' => PKPPublication::STATUS_QUEUED . ', ' . PKPPublication::STATUS_SCHEDULED
                 ]
             ]
         ];
-
+        $config['filters'][] = [
+            'heading' => __('manager.dois.filters.workflow'),
+            'filters' => [
+                [
+                    'title' => __('manager.dois.filters.inEditingOrPublished'),
+                    'param' => 'inEditingOrPublished',
+                    'value' => '1',
+                ],
+            ],
+        ];
     }
 }

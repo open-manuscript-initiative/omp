@@ -164,6 +164,7 @@
 		<migration class="APP\migration\upgrade\v3_5_0\I11241_MissingDecisionConstantsUpdate"/>
 		<migration class="APP\migration\upgrade\v3_5_0\I11125_UpdateEmailTemplateVariables"/>
 		<migration class="PKP\migration\upgrade\v3_5_0\I10962_UpdateEmailTemplateVariables"/>
+        <migration class="PKP\migration\upgrade\v3_5_0\I13283_RestoreDegradedOrcidFunctionality"/>
 		<code function="downloadIPGeoDB"/>
 		<note file="docs/release-notes/README-3.5.0" />
 	</upgrade>
@@ -177,6 +178,7 @@
 		<migration class="PKP\migration\upgrade\v3_5_0\I12513_MissingSiteLocaleUserNames"/>
 		<migration class="APP\migration\upgrade\v3_5_0\I12357_FixDecisionConstantsMissedStageId"/>
 		<migration class="APP\migration\upgrade\v3_5_0\I13128_FixEmailUrlLinks"/>
+        <migration class="PKP\migration\upgrade\v3_5_0\I13283_RestoreDegradedOrcidFunctionality"/>
 	</upgrade>
 
 	<upgrade minversion="3.3.0.0" maxversion="3.5.9.9">
@@ -224,9 +226,19 @@
 		<migration class="PKP\migration\upgrade\v3_6_0\I12593_EmailToTaskTemplates"/>
 		<migration class="APP\migration\upgrade\v3_5_0\I13128_FixEmailUrlLinks"/><!-- Already executed since 3.5.0-5 but idempotent -->
 		<migration class="PKP\migration\upgrade\v3_6_0\I12903_ReviewerUnassignEmailTemplate" />
+		<migration class="PKP\migration\upgrade\v3_6_0\I12347_FixRevisionUploadLogData" />
+		<migration class="PKP\migration\upgrade\v3_6_0\I13109_PermitPublishedMetadataEdit" />
+		<migration class="PKP\migration\upgrade\v3_6_0\I13213_TaskTemplateForeignConstraint"/>
+		<migration class="PKP\migration\upgrade\v3_6_0\I12813_UpdateAuthorResponseAndSubmissionCommentTextType"/>
+		<migration class="PKP\migration\upgrade\v3_6_0\I12994_CompetingInterestsDeclared" />
+		<migration class="APP\migration\upgrade\v3_6_0\I7527_IdentityMetadata" />
+		<migration class="APP\migration\upgrade\v3_6_0\I12593_DiscussionInternalReviewTemplate"/>
 		<code function="rebuildSearchIndex" />
 		<note file="docs/release-notes/README-3.6.0" />
 	</upgrade>
+
+	<!-- Cached data, e.g. the event listeners, may name classes that no longer exist -->
+	<code function="clearDataCache" />
 
 	<!-- Update plugin configuration - should be done as the final upgrade task -->
 	<code function="addPluginVersions" />
